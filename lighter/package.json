@@ -1,0 +1,21 @@
+{
+  "name": "lighter",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "fake-indexeddb": "^6.0.1"
+  },
+  "dependencies": {
+    "idb": "^8.0.3"
+  }
+}
