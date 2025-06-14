@@ -5,7 +5,12 @@ I should be able to display questions as needed. Group of notes will be connecte
 
 This
     Should be
-    Connected
+    Somehow
+            Wait
+        Connected
+                Ye
+
+            ERROR
 
 This
 Shouldn't
