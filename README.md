@@ -1,0 +1,1 @@
+# Obsidian-Card-Generator-Light
