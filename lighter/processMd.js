@@ -4,19 +4,19 @@ import { openDB } from "idb";
 import { ulid } from 'ulid';
 
 export const DOCUMENT_ROOT = {
-    "text": [],
+    "text": ["hello world"],
     "_id": `r-${ulid()}`,
     "children": [],
     "parent": null,
     "cardInfo": [],
-    "srs":{
+    "srs": {
         "due": null,
         "interval": null
     }
 }
 
 const formatEmText = (text) => {
-    return{
+    return {
 
     }
 }
@@ -44,21 +44,24 @@ export async function processOutputMd() {
 
         // Split file into an array of lines
         const lines = data.split(/\r?\n/);
-        let tabParents = []
+        let tabParents = [DOCUMENT_ROOT]
 
         for (let i = 0; i < lines.length; i++) {
             const currentLine = lines[i];
 
+            console.log('Line is:', currentLine);
+
             // Skip empty lines
             if (currentLine.trim() === '') {
-                tabParents = []
+                tabParents = [DOCUMENT_ROOT]
+
+                //TODO: Here I can actually capture the newlines and add it to the last parent. (NOT the root). 
+                // That way, I can playback the newlines if i were to ever recreate the markdown.
                 continue;
             }
 
-            // Set the parent
-            tabParents[0] = { "text": currentLine, "_id": `r-${ulid()}` };
 
-            console.log('Current:', `${tabParents[0]}`);
+            console.log('Current State:', `${JSON.stringify(tabParents, null, 2)}`);
 
             // Check if currentLine begins with one or more tabs or 4-space groups
             const tabMatch = currentLine.match(/^(?:\t| {4})+/);
@@ -67,27 +70,28 @@ export async function processOutputMd() {
                 const units = tabMatch[0].match(/(\t| {4})/g);
                 const numUnits = units ? units.length : 0;
                 console.log('Number of tab/4-space units at start:', numUnits);
+                // console.log(JSON.stringify(tabParents, null, 2));
 
-                tabParents[numUnits] = { "text": "", "_id": "" };
-                tabParents[numUnits].text = currentLine;
-                tabParents[numUnits]._id = `r-${ulid()}`;
+                tabParents[numUnits + 1] = { "text": "", "_id": "" };
+                tabParents[numUnits + 1].text = currentLine;
+                tabParents[numUnits + 1]._id = `r-${ulid()}`;
 
-                if (numUnits > 0 && tabParents[numUnits - 1]) {
+                if (numUnits + 1 > 0 && tabParents[numUnits]) {
                     // Add the current line to the tabParents array
-                    console.log('the single parent is:', tabParents[numUnits - 1]);
+                    console.log('the single parent is:', tabParents[numUnits]);
                 } else {
                     console.log('No parent found for this line. Possible incorrect indentation.');
-                    if (tabParents[0]) {
+                    if (tabParents[tabParents.length - 1]) {
 
-                        console.log('the single parent is:', tabParents[0]);
+                        console.log('set the single parent to the last available:', tabParents[tabParents.length - 1]);
                     } else {
                         // This condition probably is not possible
                         throw new Error('No parent found and no root parent available.');
                     }
                 }
             } else {
-                console.log('Number of tab/4-space units at start: 0');
-                tabParents = []; // Reset tabParents if no tabs or spaces
+                console.log('Number of tab/4-space units at start: 0. Parent is still root!');
+                tabParents = [DOCUMENT_ROOT, { "text": currentLine, "_id": `r-${ulid()}` }]; // Reset tabParents if no tabs or spaces
             }
         }
     } catch (error) {
