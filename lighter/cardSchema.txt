@@ -1,0 +1,46 @@
+{
+  /* ------------- core identity ------------- */
+  "_id": "r-01K6TXY9AW96J0N7DVC42C7P9P",   // ULID, “r-” = Rem
+  "_rev": "5-f3e12d45b6c3…",               // PouchDB/CouchDB revision string
+
+  /* ------------- graph position ------------- */
+  "parent": "r-01K6TXW7C7F0HZ3B9Z2YXR836Q",// points to “Cell Organelles” document
+  "children": [],                          // no nested bullets yet
+
+  /* ------------- content & formatting ------------- */
+  "text": [
+    { "type": "text", "text": "Golgi apparatus" },
+    { "type": "text", "text": " " },
+    { "type": "highlight", "text": "::" }, // card splitter
+    { "type": "text", "text": " packages proteins" }
+  ],
+  "type": 0,                               // 0 = normal bullet
+  "listStyle": "bullet",                   // render with a dot
+  "tags": ["r-Tag-Biology"],               // backlinks / tag graph
+
+  /* ------------- power-ups & flags ------------- */
+  "powerups": {                            // every power-up lives here
+    "Document": false,
+    "Folder": false,
+    "Portal": false
+  },
+
+  /* ------------- flashcard & SRS ------------- */
+  "cardInfo": [
+    {
+      "kind": "Basic",
+      "front": 0,            // index of “Golgi apparatus” span
+      "back": 3              // index of “packages proteins” span
+    }
+  ],
+  "srs": {
+    "due": 1752853200000,    // next-due time (ms since epoch)
+    "interval": 2,           // days until next review
+    "ease": 2.5,
+    "lapses": 0
+  },
+
+  /* ------------- auditing ------------- */
+  "createdAt": 1752853189123,
+  "updatedAt": 1752853189123
+}
