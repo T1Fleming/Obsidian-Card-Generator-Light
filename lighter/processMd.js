@@ -55,13 +55,17 @@ export async function processOutputMd() {
             if (currentLine.trim() === '') {
                 tabParents = [DOCUMENT_ROOT]
 
-                //TODO: Here I can actually capture the newlines and add it to the last parent. (NOT the root). 
+                //TODO: Here I can actually capture the newlines and add it to the last parent's text array. (NOT the root). 
                 // That way, I can playback the newlines if i were to ever recreate the markdown.
                 continue;
             }
 
 
             console.log('Current State:', `${JSON.stringify(tabParents, null, 2)}`);
+
+
+            //TODO: "Tab Mode" works great, but I need to eventually add support for code blocks. 
+            // These use tabs which can be an issue
 
             // Check if currentLine begins with one or more tabs or 4-space groups
             const tabMatch = currentLine.match(/^(?:\t| {4})+/);
