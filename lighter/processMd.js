@@ -1,7 +1,32 @@
+/**
+ * @file processMd.js
+ * @description This file is responsible for processing Markdown (.md) files and converting their structure into a hierarchical JSON format. 
+ *              It uses a tab-based or 4-space indentation system to determine parent-child relationships between lines of text.
+ *              The resulting structure is stored in a tree-like format, starting from a root document object.
+ * 
+ *              The script includes functionality to:
+ *              - Read a Markdown file (`sample.md`) asynchronously.
+ *              - Parse the file line by line, identifying indentation levels to build a nested structure.
+ *              - Handle empty lines and reset the hierarchy appropriately.
+ *              - Generate unique IDs for each node in the structure using the `ulid` library.
+ *              - Log the processing steps for debugging purposes.
+ * 
+ *              Future improvements include handling code blocks and preserving newlines for accurate Markdown recreation.
+ * 
+ * @module processMd
+ * @requires fs - Node.js file system module (promises API) for reading files.
+ * @requires fake-indexeddb/auto - A mock IndexedDB implementation for testing.
+ * @requires idb - A library for working with IndexedDB.
+ * @requires ulid - A library for generating unique IDs.
+ */
+
+
 import { promises as fs } from 'fs';
 import "fake-indexeddb/auto";
 import { openDB } from "idb";
 import { ulid } from 'ulid';
+
+
 
 export const DOCUMENT_ROOT = {
     "text": ["hello world"],
